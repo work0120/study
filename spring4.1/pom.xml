@@ -1,4 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <parent>
         <artifactId>spring4-showcase</artifactId>
@@ -27,7 +27,11 @@
         </dependency>
 
 
-
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>3.2.8</version>
+        </dependency>
 
 
         <dependency>
@@ -77,7 +81,7 @@
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
-            <version>2.4</version>
+            <version>2.5</version>
         </dependency>
 
 
@@ -105,16 +109,11 @@
             <version>2.3.2</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.google.protobuf</groupId>
-            <artifactId>protobuf-java</artifactId>
-            <version>2.4.1</version>
-        </dependency>
 
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.1.41</version>
+            <version>1.1.42</version>
         </dependency>
 
         <!-- JSON BEGIN -->
@@ -165,13 +164,62 @@
             <systemPath>${basedir}/src/main/wrapper/lib/wrapper-3.5.25.jar</systemPath>
         </dependency>-->
         <dependency>
+            <groupId>de.ruedigermoeller</groupId>
+            <artifactId>fst</artifactId>
+            <version>2.08</version>
+        </dependency>
+        <dependency>
             <groupId>tanukisoft</groupId>
             <artifactId>wrapper</artifactId>
             <version>3.2.3</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.googlecode.protobuf-java-format</groupId>
+            <artifactId>protobuf-java-format</artifactId>
+            <version>1.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>2.6.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-server</artifactId>
+            <version>9.2.3.v20140905</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-webapp</artifactId>
+            <version>9.2.3.v20140905</version>
+        </dependency>
+
     </dependencies>
     <build>
         <finalName>spring4.1</finalName>
+        <plugins>
+            <plugin>
+                <groupId>com.google.protobuf.tools</groupId>
+                <artifactId>maven-protoc-plugin</artifactId>
+                <version>0.3.2</version>
+                <executions>
+                    <execution>
+                        <id>generate-source</id>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <protoSourceRoot>${basedir}/src/main/proto/</protoSourceRoot>
+                    <protocExecutable>protoc-2.6.0-win32/protoc.exe</protocExecutable>
+                    <outputDirectory>target/classes</outputDirectory>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 </project>
