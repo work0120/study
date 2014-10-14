@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Configuration status="info" monitorInterval="5">
+    <Properties>
+        <property name="LOG_HOME">log</property>
+        <!-- 日志备份目录 -->
+        <property name="BACKUP_HOME">{LOG_HOME}/backup</property>
+        <property name="STAT_NAME">stat</property>
+        <property name="SERVER_NAME">log</property>
+    </Properties>
+
+    <Appenders>
+        <!-- 定义控制台输出 -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%c][%t][%method-%line] %-5level  - %msg%n"/>
+
+            <!-- 			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%c][%t] %-5level %file:%method:%line %logger{36} - %msg%n" /> -->
+        </Console>
+        <Console name="Console-sql" target="SYSTEM_OUT">
+            <PatternLayout pattern="%msg%n"/>
+        </Console>
+        <Console name="Console-test" target="SYSTEM_ERR">
+            <PatternLayout pattern="[%method-%line] %-5level: %msg%n"/>
+        </Console>
+
+    </Appenders>
+
+    <Loggers>
+        <!--<logger name="org.nebula.test.spring4.test.*" level="info" additivity="false">
+            <appender-ref ref="Console-test" />
+            <MarkerFilter marker="LOG4JDBC_OTHER" onMatch="DENY"
+                          onMismatch="NEUTRAL"/>
+        </logger>-->
+
+
+        <Root level="info">
+            <!-- <AppenderRef ref="Mail"/> -->
+            <appender-ref ref="Console"/>
+
+        </Root>
+    </Loggers>
+</Configuration>

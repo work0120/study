@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans 
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/context 
+http://www.springframework.org/schema/context/spring-context.xsd
+http://www.springframework.org/schema/tx 
+http://www.springframework.org/schema/tx/spring-tx.xsd
+http://www.springframework.org/schema/aop 
+http://www.springframework.org/schema/aop/spring-aop.xsd
+http://www.springframework.org/schema/mvc 
+http://www.springframework.org/schema/mvc/spring-mvc.xsd
+">
+
+	<context:component-scan base-package="org.nebula.test.webmvc" />
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.protobuf.ProtobufHttpMessageConverter" >
+                <constructor-arg>
+                    <bean class="org.nebula.test.webmvc.controller.MyExtensionRegistryInitializer" />
+                </constructor-arg>
+            </bean>
+
+            <!--<bean class="org.springframework.http.converter.json.GsonHttpMessageConverter">
+                <property name="jsonPrefix" value="!!!"/>
+            </bean>-->
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+    <!--<mvc:groovy-configurer resource-loader-path="classpath:webmvc/templates/" cache-templates="false" />-->
+
+   <mvc:view-resolvers>
+        <mvc:content-negotiation>
+            <mvc:default-views>
+                <bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
+                   <property name="jsonpParameterNames">
+                        <set>
+                            <value>jsonp</value>
+                            <value>callback</value>
+                        </set>
+                    </property>
+                </bean>
+            </mvc:default-views>
+        </mvc:content-negotiation>
+        <!--<mvc:groovy cache-views="false" suffix=".tpl" />-->
+    </mvc:view-resolvers>
+
+
+    <!--重定向视图控制器标签-->
+   <!-- <mvc:redirect-view-controller
+            path="/redirect"
+            redirect-url="/status"
+            context-relative="true"
+            status-code="301"
+            keep-query-params="true"/>-->
+
+    <!--状态控制器标签-->
+    <!--<mvc:status-controller path="/status" status-code="200"/>-->
+    <!--带状态的视图控制器标签-->
+    <!--<mvc:view-controller path="/error/**" status-code="200"/>-->
+
+    <!--<mvc:default-servlet-handler/>-->
+    <!--<mvc:resources mapping="/static/**" location="/WEB-INF/static/">
+    </mvc:resources>-->
+
+
+
+</beans>
